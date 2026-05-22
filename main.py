@@ -11,12 +11,7 @@ class BubbleTea(BaseModel):
     precio: float
     active: bool
 
-@app.get("/")
-def inicio() -> dict:
-    return {
-        "mensaje": "API BubbleTea funcionando"
-    }
-
+    
 @app.get("/bubbletea", response_model=List[BubbleTea])
 def obtener_bubbletea() -> List[BubbleTea]:
 
