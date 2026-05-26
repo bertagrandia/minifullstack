@@ -1,42 +1,12 @@
-from fastapi import FastAPI
-from typing import List
-from pydantic import BaseModel
+from fastapi import APIRouter, FastAPI, HTTPException
+from dotencv import load_dotenv
+from routes.bubbletea import router as bubbletea_router
+
+
 
 app = FastAPI()
+app.include_router(bubbletea_router)
 
-class BubbleTea(BaseModel):
-    id: int
-    nombre: str
-    temperatura: str
-    precio: float
-    active: bool
-
-    
-@app.get("/bubbletea", response_model=List[BubbleTea])
-def obtener_bubbletea() -> List[BubbleTea]:
-
-    bubbleteas = [
-        BubbleTea(
-            id=1,
-            nombre="Classic Milk Tea",
-            temperatura="Frío",
-            precio=4.50,
-            active=True
-        ),
-        BubbleTea(
-            id=2,
-            nombre="Matcha Bubble Tea",
-            temperatura="Caliente",
-            precio=5.20,
-            active=True
-        ),
-        BubbleTea(
-            id=3,
-            nombre="Strawberry Tea",
-            temperatura="Frío",
-            precio=4.80,
-            active=False
-        )
-    ]
-
-    return bubbleteas
+@ºapp.get("/")
+def read_root():
+   return {"message": "Bienvenido a la API de Bubble Tea!"}
