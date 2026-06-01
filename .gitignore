@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Secrets
+secrets/
+*.json.key
+.env
+.env.*
+
+# DB
+*.db
+*.sqlite3
+
+# Node
+node_modules/
+dist/
+.angular/
+
+# IDEs
+.vscode/
+.idea/

@@ -1,0 +1,32 @@
+<div class="auth-page">
+   <div class="auth-card">
+      <div class="brand">
+         <div class="bubble">🧋</div>
+         <div>
+            <h2>BubbleTea Login</h2>
+            <p>Accede a tu selección de bebidas frescas.</p>
+         </div>
+      </div>
+
+      <form class="auth-form" (ngSubmit)="login()">
+         <label>
+            Email
+            <input [(ngModel)]="email" name="email" type="email" autocomplete="username" placeholder="tú@correo.com" />
+         </label>
+
+         <label>
+            Contraseña
+            <input [(ngModel)]="password" name="password" type="password" autocomplete="current-password"
+               placeholder="••••••••" />
+         </label>
+
+         <button type="submit">Iniciar sesión</button>
+      </form>
+
+      <p class="error" *ngIf="error">{{ error }}</p>
+
+      <p class="message">
+         ¿No tienes cuenta? <a routerLink="/register">Regístrate aquí</a>
+      </p>
+   </div>
+</div>

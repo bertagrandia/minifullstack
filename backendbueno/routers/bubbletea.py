@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
+from auth.firebase import verify_token
 from database import SessionLocal
 from models.bubbletea import BubbleTea
 
@@ -26,6 +27,7 @@ class BubbleTeaIn(BaseModel):
 router = APIRouter(
     prefix="/bubbleteas",
     tags=["bubbleteas"],
+    dependencies=[Depends(verify_token)],
 )
 
 

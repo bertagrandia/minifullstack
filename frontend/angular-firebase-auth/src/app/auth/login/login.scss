@@ -1,0 +1,107 @@
+.auth-page {
+   min-height: 100vh;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   padding: 2rem;
+   background: radial-gradient(circle at top left, #ffe6c7 0%, #fff1e6 35%, #f7d7b7 100%);
+}
+
+.auth-card {
+   width: min(420px, 100%);
+   padding: 2.4rem;
+   border-radius: 28px;
+   background: rgba(255, 255, 255, 0.92);
+   box-shadow: 0 30px 80px rgba(78, 36, 2, 0.12);
+   border: 1px solid rgba(255, 255, 255, 0.75);
+   backdrop-filter: blur(12px);
+}
+
+.brand {
+   display: flex;
+   gap: 1rem;
+   align-items: center;
+   margin-bottom: 1.8rem;
+}
+
+.bubble {
+   width: 64px;
+   height: 64px;
+   display: grid;
+   place-items: center;
+   border-radius: 50%;
+   background: #ffcf99;
+   font-size: 2rem;
+   box-shadow: 0 16px 30px rgba(255, 151, 55, 0.25);
+}
+
+.auth-form {
+   display: grid;
+   gap: 1rem;
+}
+
+label {
+   display: grid;
+   gap: 0.55rem;
+   font-weight: 600;
+   color: #5b3a20;
+}
+
+input {
+   width: 100%;
+   padding: 0.95rem 1rem;
+   border-radius: 18px;
+   border: 1px solid rgba(134, 96, 42, 0.18);
+   background: #fff7f0;
+   font-size: 0.98rem;
+   color: #4e342e;
+}
+
+input:focus {
+   outline: none;
+   border-color: #ffb347;
+   box-shadow: 0 0 0 3px rgba(255, 183, 71, 0.16);
+}
+
+button {
+   margin-top: 0.5rem;
+   width: 100%;
+   padding: 1rem;
+   border: none;
+   border-radius: 18px;
+   background: linear-gradient(135deg, #f57c00, #ffb347);
+   color: #fff;
+   font-weight: 700;
+   cursor: pointer;
+   transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+   transform: translateY(-1px);
+   box-shadow: 0 16px 28px rgba(245, 124, 0, 0.22);
+}
+
+.error {
+   margin-top: 1rem;
+   color: #d00000;
+   font-weight: 600;
+   background: rgba(255, 240, 240, 0.9);
+   padding: 0.85rem 1rem;
+   border-radius: 16px;
+}
+
+.message {
+   margin-top: 1.4rem;
+   color: #6f4e37;
+   text-align: center;
+}
+
+.message a {
+   color: #d35400;
+   font-weight: 700;
+   text-decoration: none;
+}
+
+.message a:hover {
+   text-decoration: underline;
+}
