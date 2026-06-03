@@ -86,15 +86,17 @@
     <div class="grid">
       @for (tea of filteredTeas(); track tea.id; let i = $index) {
         <div class="card" [style.animation-delay]="i * 80 + 'ms'">
-          <div class="card-emoji">🧋</div>
-          @if (tea.favorite) {
-            <span class="badge-favorite">⭐ Favorito</span>
-          }
-          <h3 class="card-name">{{ tea.name }}</h3>
-          <p class="card-flavor">{{ tea.flavor }}</p>
-          <p class="card-price">{{ tea.price }} €</p>
+          <div class="bubble-inner">
+            @if (tea.favorite) {
+              <span class="badge-favorite">⭐</span>
+            }
+            <div class="card-emoji">🧋</div>
+            <h3 class="card-name">{{ tea.name }}</h3>
+            <p class="card-flavor">{{ tea.flavor }}</p>
+            <p class="card-price">{{ tea.price }} €</p>
+          </div>
           <div class="card-actions">
-            <button class="btn-edit" (click)="openEdit(tea)">✏️ Editar</button>
+            <button class="btn-edit" (click)="openEdit(tea)" title="Editar">✏️</button>
             <button class="btn-delete" (click)="deleteTea(tea)" title="Eliminar">🗑️</button>
           </div>
         </div>

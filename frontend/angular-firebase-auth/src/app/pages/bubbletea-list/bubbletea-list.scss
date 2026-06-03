@@ -321,116 +321,142 @@ header h1 {
   p  { margin: 0; color: rgba($dark-text, 0.48); font-size: 0.88rem; font-weight: 400; }
 }
 
-// ─── Grid & Cards ────────────────────────────────────────────────────────────
+// ─── Grid & Bubbles ──────────────────────────────────────────────────────────
 .grid {
   position: relative;
   z-index: 10;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem 1.8rem;
+  justify-content: center;
 }
 
 .card {
-  background: $surface-card;
-  border-radius: $r-md;
-  padding: 1.6rem 1.5rem 1.3rem;
-  border: 1px solid $border;
   display: flex;
   flex-direction: column;
-  gap: 0.38rem;
+  align-items: center;
+  gap: 0.55rem;
   animation: slideUp 0.3s ease both;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 1px 3px rgba($dark-text, 0.045);
-
-  &::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 3px;
-    background: $green-pale;
-    transition: background 0.22s ease, width 0.22s ease;
-  }
+  background: transparent;
+  border: none;
+  padding: 0;
+  box-shadow: none;
 
   &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 22px rgba($dark-text, 0.08);
-
-    &::before {
-      background: $dark-text;
-      width: 4px;
+    .bubble-inner {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow:
+        0 16px 40px rgba($dark-text, 0.13),
+        inset 0 -5px 14px rgba($green-pale, 0.35),
+        inset 0 5px 10px rgba(255, 255, 255, 0.85);
+      border-color: $green-light;
     }
+    .card-actions { opacity: 1; }
   }
+}
+
+.bubble-inner {
+  width: 165px;
+  height: 165px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 36% 26%,
+    rgba(255, 255, 255, 0.92) 0%,
+    $surface-card 55%,
+    rgba($green-pale, 0.18) 100%
+  );
+  border: 2px solid rgba($green-pale, 0.85);
+  box-shadow:
+    0 6px 22px rgba($dark-text, 0.08),
+    inset 0 -4px 12px rgba($green-pale, 0.28),
+    inset 0 4px 8px rgba(255, 255, 255, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.2rem;
+  box-sizing: border-box;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+  overflow: hidden;
+  position: relative;
 }
 
 .card-emoji {
-  font-size: 1.95rem;
+  font-size: 1.75rem;
   line-height: 1;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.15rem;
 }
 
 .badge-favorite {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  background: #fffbea;
-  color: #8b7000;
-  font-size: 0.69rem;
-  font-weight: 700;
-  padding: 0.15rem 0.52rem;
-  border-radius: 3px;
-  width: fit-content;
-  border: 1px solid rgba(200, 160, 0, 0.18);
-  letter-spacing: 0.2px;
+  position: absolute;
+  top: 22%;
+  right: 17%;
+  font-size: 0.78rem;
+  line-height: 1;
 }
 
 .card-name {
   margin: 0;
-  font-size: 1.04rem;
+  font-size: 0.82rem;
   font-weight: 800;
   color: $dark-text;
   line-height: 1.2;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.2px;
+  max-width: 110px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .card-flavor {
   margin: 0;
-  font-size: 0.72rem;
+  font-size: 0.62rem;
   font-weight: 600;
   color: rgba($dark-text, 0.42);
   text-transform: uppercase;
-  letter-spacing: 1.1px;
+  letter-spacing: 0.9px;
+  max-width: 110px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card-price {
-  margin: 0.3rem 0 0;
-  font-size: 1.3rem;
+  margin: 0.18rem 0 0;
+  font-size: 1.05rem;
   font-weight: 800;
   color: $dark-text;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.3px;
 }
 
-.card-actions { display: flex; gap: 0.4rem; margin-top: 0.6rem; }
+.card-actions {
+  display: flex;
+  gap: 0.35rem;
+  opacity: 0.45;
+  transition: opacity 0.2s ease;
+}
 
 .btn-edit {
   @extend %btn-base;
-  padding: 0.38rem 0.9rem;
+  padding: 0.32rem 0.72rem;
   background: $green-cream;
   color: $dark-text;
-  font-size: 0.75rem;
-  border-radius: $r-sm;
+  font-size: 0.82rem;
+  border-radius: $r-pill;
   border: 1px solid $border;
   &:hover { background: $green-pale; transform: translateY(-1px); }
 }
 
 .btn-delete {
   @extend %btn-base;
-  padding: 0.38rem 0.6rem;
+  padding: 0.32rem 0.55rem;
   background: transparent;
   color: #b04040;
-  font-size: 0.8rem;
-  border-radius: $r-sm;
+  font-size: 0.82rem;
+  border-radius: $r-pill;
   border: 2px solid #e53935;
   &:hover { background: rgba(176, 64, 64, 0.05); border-color: #c62828; transform: translateY(-1px); }
 }
