@@ -70,5 +70,5 @@ def delete_bubbletea(bubbletea_id: int, db: Session = Depends(get_db)):
     item = db.query(BubbleTea).filter(BubbleTea.bubbletea_id == bubbletea_id).first()
     if not item:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="BubbleTea no encontrado")
-    db.delete(item)
+    item.active = False
     db.commit()

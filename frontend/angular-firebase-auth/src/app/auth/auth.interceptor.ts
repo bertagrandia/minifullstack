@@ -1,14 +1,14 @@
 import { inject } from '@angular/core';
 import { HttpInterceptorFn } from '@angular/common/http';
-import { Auth, authState } from '@angular/fire/auth';
-import { from, switchMap, take } from 'rxjs';
+import { Auth } from '@angular/fire/auth';
+import { from, switchMap } from 'rxjs';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const auth = inject(Auth);
 
-  return authState(auth).pipe(
-    take(1),
-    switchMap(user => {
+  return from(auth.authStateReady()).pipe(
+    switchMap(() => {
+      const user = auth.currentUser;
       if (!user) return next(req);
       return from(user.getIdToken()).pipe(
         switchMap(token => next(req.clone({

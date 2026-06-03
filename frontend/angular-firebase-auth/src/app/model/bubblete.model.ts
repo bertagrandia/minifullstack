@@ -3,6 +3,16 @@ export interface BubbleTea {
    name: string;
    flavor: string;
    price: number;
+   stock?: number;
+   descripcion?: string;
+   favorite?: boolean;
+}
 
-   favorite?: boolean; // ⭐ añade esto
+export interface BubbleTeaPayload {
+   nombre: string;
+   tipo_bubbletea: string;
+   descripcion?: string;
+   precio: number;
+   stock: number;
+   active: boolean;
 }

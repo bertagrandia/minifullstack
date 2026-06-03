@@ -1,107 +1,180 @@
+// Color palette - Green Pastel (shared)
+$green-matcha: #8CC84F;
+$green-dark: #7CB342;
+$green-light: #B5E7A0;
+$green-pale: #C8E6C9;
+$green-cream: #E8F5E9;
+$dark-text: #4a5c2a;
+$light-text: #7BA428;
+$medium-text: #6B8E23;
+
+$surface: #f6f9f2;
+$surface-card: #ffffff;
+$border: rgba($dark-text, 0.1);
+$r-sm: 4px;
+$r-md: 10px;
+$r-lg: 16px;
+$r-pill: 100px;
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+// ─── Page ────────────────────────────────────────────────────────────────────
 .auth-page {
-   min-height: 100vh;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   padding: 2rem;
-   background: radial-gradient(circle at top right, #ffe6d5 0%, #fff7ef 36%, #f9e2c8 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-color: $surface;
+  background-image: radial-gradient(circle 1px at 1px 1px, rgba($dark-text, 0.055) 1px, transparent 0);
+  background-size: 26px 26px;
+  font-family: 'Poppins', sans-serif;
 }
 
+// ─── Card ────────────────────────────────────────────────────────────────────
 .auth-card {
-   width: min(420px, 100%);
-   padding: 2.4rem;
-   border-radius: 28px;
-   background: rgba(255, 255, 255, 0.92);
-   box-shadow: 0 30px 80px rgba(108, 64, 41, 0.14);
-   border: 1px solid rgba(255, 255, 255, 0.72);
-   backdrop-filter: blur(12px);
+  position: relative;
+  z-index: 1;
+  width: min(420px, 100%);
+  padding: 2.6rem 2.4rem;
+  border-radius: $r-lg;
+  background: $surface-card;
+  border: 1px solid $border;
+  border-left: 4px solid $green-pale;
+  box-shadow: 0 4px 20px rgba($dark-text, 0.06), 0 1px 4px rgba($dark-text, 0.04);
+  animation: slideUp 0.28s ease both;
 }
 
+// ─── Brand ───────────────────────────────────────────────────────────────────
 .brand {
-   display: flex;
-   gap: 1rem;
-   align-items: center;
-   margin-bottom: 1.8rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  h2 {
+    margin: 0;
+    font-size: 1.28rem;
+    font-weight: 800;
+    color: $dark-text;
+    letter-spacing: -1.2px;
+    line-height: 1.15;
+  }
+
+  p {
+    margin: 0.22rem 0 0;
+    font-size: 0.78rem;
+    color: rgba($dark-text, 0.46);
+    font-weight: 400;
+  }
 }
 
 .bubble {
-   width: 64px;
-   height: 64px;
-   display: grid;
-   place-items: center;
-   border-radius: 50%;
-   background: #ffd2a6;
-   font-size: 2rem;
-   box-shadow: 0 16px 30px rgba(255, 160, 65, 0.24);
+  width: 3.1rem;
+  height: 3.1rem;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: $green-cream;
+  border: 1.5px solid rgba($green-pale, 0.85);
+  font-size: 1.6rem;
 }
 
+// ─── Form ────────────────────────────────────────────────────────────────────
 .auth-form {
-   display: grid;
-   gap: 1rem;
+  display: grid;
+  gap: 1.15rem;
 }
 
 label {
-   display: grid;
-   gap: 0.55rem;
-   font-weight: 600;
-   color: #5e4330;
+  display: grid;
+  gap: 0.35rem;
+  font-weight: 700;
+  color: rgba($dark-text, 0.48);
+  font-size: 0.69rem;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  font-family: 'Poppins', sans-serif;
 }
 
 input {
-   width: 100%;
-   padding: 0.95rem 1rem;
-   border-radius: 18px;
-   border: 1px solid rgba(128, 89, 40, 0.16);
-   background: #fff7f0;
-   font-size: 0.98rem;
-   color: #4e342e;
+  width: 100%;
+  padding: 0.52rem 0.15rem;
+  border: none;
+  border-bottom: 1.5px solid rgba($dark-text, 0.14);
+  border-radius: 0;
+  background: transparent;
+  font-size: 0.9rem;
+  color: $dark-text;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+  height: 2.4rem;
+  box-sizing: border-box;
+
+  &::placeholder { color: rgba($dark-text, 0.22); }
+  &:focus { border-bottom-color: $dark-text; }
 }
 
-input:focus {
-   outline: none;
-   border-color: #ffab60;
-   box-shadow: 0 0 0 3px rgba(255, 171, 96, 0.16);
-}
-
+// ─── Button ──────────────────────────────────────────────────────────────────
 button {
-   margin-top: 0.5rem;
-   width: 100%;
-   padding: 1rem;
-   border: none;
-   border-radius: 18px;
-   background: linear-gradient(135deg, #ff8f00, #ffb347);
-   color: #fff;
-   font-weight: 700;
-   cursor: pointer;
-   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-top: 0.6rem;
+  width: 100%;
+  padding: 0.78rem;
+  border: 2px solid $dark-text;
+  border-radius: $r-pill;
+  background: $dark-text;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+  transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+
+  &:hover {
+    background: transparent;
+    color: $dark-text;
+    transform: translateY(-1px);
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 3px rgba($green-pale, 0.8);
+  }
+
+  &:active { transform: translateY(0); }
 }
 
-button:hover {
-   transform: translateY(-1px);
-   box-shadow: 0 16px 28px rgba(255, 143, 0, 0.22);
-}
-
+// ─── States ──────────────────────────────────────────────────────────────────
 .error {
-   margin-top: 1rem;
-   color: #d00000;
-   font-weight: 600;
-   background: rgba(255, 240, 240, 0.9);
-   padding: 0.85rem 1rem;
-   border-radius: 16px;
+  margin-top: 1rem;
+  color: #c0392b;
+  font-weight: 600;
+  font-size: 0.78rem;
+  background: rgba(192, 57, 43, 0.04);
+  padding: 0.5rem 0.85rem;
+  border-radius: $r-sm;
+  border-left: 2px solid #c0392b;
 }
 
 .message {
-   margin-top: 1.4rem;
-   color: #6f4e37;
-   text-align: center;
+  margin-top: 1.6rem;
+  color: rgba($dark-text, 0.48);
+  text-align: center;
+  font-size: 0.84rem;
+  font-family: 'Poppins', sans-serif;
 }
 
 .message a {
-   color: #d35400;
-   font-weight: 700;
-   text-decoration: none;
-}
+  color: $dark-text;
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px solid rgba($dark-text, 0.22);
+  transition: border-color 0.15s;
 
-.message a:hover {
-   text-decoration: underline;
+  &:hover { border-bottom-color: $dark-text; }
 }

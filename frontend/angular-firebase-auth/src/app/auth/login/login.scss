@@ -1,195 +1,180 @@
+// Color palette - Green Pastel (shared)
+$green-matcha: #8CC84F;
+$green-dark: #7CB342;
+$green-light: #B5E7A0;
+$green-pale: #C8E6C9;
+$green-cream: #E8F5E9;
+$dark-text: #4a5c2a;
+$light-text: #7BA428;
+$medium-text: #6B8E23;
+
+$surface: #f6f9f2;
+$surface-card: #ffffff;
+$border: rgba($dark-text, 0.1);
+$r-sm: 4px;
+$r-md: 10px;
+$r-lg: 16px;
+$r-pill: 100px;
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+// ─── Page ────────────────────────────────────────────────────────────────────
 .auth-page {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  background: linear-gradient(135deg, #F1F8E9 0%, #E8F5E9 100%);
-  position: relative;
-  overflow: hidden;
-
-  &::before {
-    content: '';
-    position: absolute;
-    width: 320px;
-    height: 320px;
-    border-radius: 50%;
-    background: rgba(140, 200, 79, 0.18);
-    filter: blur(70px);
-    top: -120px;
-    left: -100px;
-    pointer-events: none;
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    width: 280px;
-    height: 280px;
-    border-radius: 50%;
-    background: rgba(122, 179, 66, 0.18);
-    filter: blur(70px);
-    bottom: -80px;
-    right: -80px;
-    pointer-events: none;
-  }
+  background-color: $surface;
+  background-image: radial-gradient(circle 1px at 1px 1px, rgba($dark-text, 0.055) 1px, transparent 0);
+  background-size: 26px 26px;
+  font-family: 'Poppins', sans-serif;
 }
 
+// ─── Card ────────────────────────────────────────────────────────────────────
 .auth-card {
   position: relative;
   z-index: 1;
-  width: min(440px, 100%);
-  padding: 2.5rem;
-  border-radius: 28px;
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(16px);
-  box-shadow:
-    0 8px 32px rgba(122, 179, 66, 0.2),
-    0 24px 64px rgba(140, 200, 79, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.9);
+  width: min(420px, 100%);
+  padding: 2.6rem 2.4rem;
+  border-radius: $r-lg;
+  background: $surface-card;
+  border: 1px solid $border;
+  border-left: 4px solid $green-pale;
+  box-shadow: 0 4px 20px rgba($dark-text, 0.06), 0 1px 4px rgba($dark-text, 0.04);
+  animation: slideUp 0.28s ease both;
 }
 
+// ─── Brand ───────────────────────────────────────────────────────────────────
 .brand {
   display: flex;
   gap: 1rem;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 2.2rem;
 
   h2 {
     margin: 0;
-    font-size: 1.45rem;
+    font-size: 1.28rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #8CC84F, #7CB342);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: $dark-text;
+    letter-spacing: -1.2px;
+    line-height: 1.15;
   }
 
   p {
-    margin: 0.25rem 0 0;
-    font-size: 0.84rem;
-    color: #7BA428;
+    margin: 0.22rem 0 0;
+    font-size: 0.78rem;
+    color: rgba($dark-text, 0.46);
+    font-weight: 400;
   }
 }
 
 .bubble {
-  width: 64px;
-  height: 64px;
+  width: 3.1rem;
+  height: 3.1rem;
   flex-shrink: 0;
   display: grid;
   place-items: center;
-  border-radius: 20px;
-  background: linear-gradient(135deg, rgba(140, 200, 79, 0.2), rgba(122, 179, 66, 0.2));
-  font-size: 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  box-shadow: 0 4px 12px rgba(122, 179, 66, 0.15);
+  border-radius: 50%;
+  background: $green-cream;
+  border: 1.5px solid rgba($green-pale, 0.85);
+  font-size: 1.6rem;
 }
 
+// ─── Form ────────────────────────────────────────────────────────────────────
 .auth-form {
   display: grid;
-  gap: 1rem;
+  gap: 1.15rem;
 }
 
 label {
   display: grid;
-  gap: 0.4rem;
-  font-weight: 600;
-  color: #7BA428;
-  font-size: 0.85rem;
-  letter-spacing: 0.01em;
+  gap: 0.35rem;
+  font-weight: 700;
+  color: rgba($dark-text, 0.48);
+  font-size: 0.69rem;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  font-family: 'Poppins', sans-serif;
 }
 
 input {
   width: 100%;
-  padding: 0.88rem 1rem;
-  border-radius: 14px;
-  border: 1.5px solid rgba(122, 179, 66, 0.25);
-  background: rgba(255, 255, 255, 0.75);
-  font-size: 0.95rem;
-  color: #4a5c2a;
+  padding: 0.52rem 0.15rem;
+  border: none;
+  border-bottom: 1.5px solid rgba($dark-text, 0.14);
+  border-radius: 0;
+  background: transparent;
+  font-size: 0.9rem;
+  color: $dark-text;
   font-family: inherit;
-  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
   outline: none;
+  transition: border-color 0.2s;
+  height: 2.4rem;
+  box-sizing: border-box;
 
-  &::placeholder {
-    color: rgba(75, 92, 42, 0.4);
-  }
-
-  &:focus {
-    border-color: #8CC84F;
-    box-shadow: 0 0 0 3px rgba(140, 200, 79, 0.15);
-    background: #fff;
-  }
+  &::placeholder { color: rgba($dark-text, 0.22); }
+  &:focus { border-bottom-color: $dark-text; }
 }
 
+// ─── Button ──────────────────────────────────────────────────────────────────
 button {
-  position: relative;
-  overflow: hidden;
-  margin-top: 0.5rem;
+  margin-top: 0.6rem;
   width: 100%;
-  padding: 0.92rem;
-  border: none;
-  border-radius: 50px;
-  background: linear-gradient(135deg, #8CC84F, #7CB342);
+  padding: 0.78rem;
+  border: 2px solid $dark-text;
+  border-radius: $r-pill;
+  background: $dark-text;
   color: #fff;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-family: inherit;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 8px 24px rgba(140, 200, 79, 0.4);
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -70%;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
-    transition: left 0.45s ease;
-  }
+  outline: none;
+  transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 14px 32px rgba(140, 200, 79, 0.5);
-
-    &::after {
-      left: 140%;
-    }
+    background: transparent;
+    color: $dark-text;
+    transform: translateY(-1px);
   }
 
-  &:active {
-    transform: translateY(0);
+  &:focus-visible {
+    box-shadow: 0 0 0 3px rgba($green-pale, 0.8);
   }
+
+  &:active { transform: translateY(0); }
 }
 
+// ─── States ──────────────────────────────────────────────────────────────────
 .error {
   margin-top: 1rem;
-  color: #d63a3a;
+  color: #c0392b;
   font-weight: 600;
-  font-size: 0.88rem;
-  background: rgba(255, 150, 150, 0.1);
-  padding: 0.8rem 1rem;
-  border-radius: 14px;
-  border: 1px solid rgba(255, 150, 150, 0.25);
+  font-size: 0.78rem;
+  background: rgba(192, 57, 43, 0.04);
+  padding: 0.5rem 0.85rem;
+  border-radius: $r-sm;
+  border-left: 2px solid #c0392b;
 }
 
 .message {
-  margin-top: 1.5rem;
-  color: #7BA428;
+  margin-top: 1.6rem;
+  color: rgba($dark-text, 0.48);
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 0.84rem;
+  font-family: 'Poppins', sans-serif;
 }
 
 .message a {
-  color: #8CC84F;
+  color: $dark-text;
   font-weight: 700;
   text-decoration: none;
-  transition: color 0.15s;
+  border-bottom: 1px solid rgba($dark-text, 0.22);
+  transition: border-color 0.15s;
 
-  &:hover {
-    color: #7CB342;
-    text-decoration: underline;
-  }
+  &:hover { border-bottom-color: $dark-text; }
 }

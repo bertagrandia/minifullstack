@@ -129,6 +129,14 @@ export class BubbleteaListComponent implements OnInit {
     });
   }
 
+  deleteTea(tea: BubbleTea) {
+    if (!confirm(`¿Eliminar "${tea.name}"?`)) return;
+    this.bubbletea.delete(tea.id).subscribe({
+      next: () => this.teas.update(list => list.filter(t => t.id !== tea.id)),
+      error: () => alert('Error al eliminar el bubbletea.')
+    });
+  }
+
   async logout() {
     await this.auth.logout();
     this.router.navigate(['/login']);
