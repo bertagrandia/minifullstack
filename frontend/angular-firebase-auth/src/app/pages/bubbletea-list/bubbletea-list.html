@@ -1,28 +1,162 @@
 <div class="page">
 
-   <header>
-      <h1>🍵 BubbleTea World</h1>
-      <button (click)="logout()">Logout</button>
-   </header>
+  <!-- Decorative floating background bubbles -->
+  <div class="bg-bubble bg-bubble--1"></div>
+  <div class="bg-bubble bg-bubble--2"></div>
+  <div class="bg-bubble bg-bubble--3"></div>
+  <div class="bg-bubble bg-bubble--4"></div>
 
-   <div *ngIf="loading" class="loading">
-      <p>Cargando bubbleteas...</p>
-   </div>
+  <header>
+    <div class="header-brand">
+      <span class="header-logo">🧋</span>
+      <h1>BubbleTea World</h1>
+    </div>
+    <div class="header-actions">
+      <button class="btn-create" (click)="openCreate()">✨ Nuevo BubbleTea</button>
+      <button class="btn-logout" (click)="logout()">Logout</button>
+    </div>
+  </header>
 
-   <div *ngIf="error" class="error">
-      <p>{{ error }}</p>
-   </div>
+  <!-- Search bar + category filter pills -->
+  <div class="controls">
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Buscar bubbletea por nombre..."
+        [(ngModel)]="searchQuery" />
+    </div>
+    <div class="filter-pills">
+      <button
+        class="filter-pill"
+        [class.filter-pill--active]="selectedCategory() === 'all'"
+        (click)="selectCategory('all')">Todos 🧋</button>
+      <button
+        class="filter-pill"
+        [class.filter-pill--active]="selectedCategory() === 'frutal'"
+        (click)="selectCategory('frutal')">Frutal 🍓</button>
+      <button
+        class="filter-pill"
+        [class.filter-pill--active]="selectedCategory() === 'cremoso'"
+        (click)="selectCategory('cremoso')">Cremoso 🥛</button>
+      <button
+        class="filter-pill"
+        [class.filter-pill--active]="selectedCategory() === 'matcha'"
+        (click)="selectCategory('matcha')">Matcha 🍵</button>
+    </div>
+  </div>
 
-   <div class="grid">
-      <div class="card" *ngFor="let tea of teas">
-         <div class="emoji">🧋</div>
-
-         <h3>{{ tea.name }}</h3>
-         <p class="flavor">{{ tea.flavor }}</p>
-         <p class="price">{{ tea.price }} €</p>
-
-         <span *ngIf="tea.favorite">⭐ Favorite</span>
+  @if (loading()) {
+    <div class="loading">
+      <div class="loading-bubbles">
+        <div class="loading-bubble"></div>
+        <div class="loading-bubble"></div>
+        <div class="loading-bubble"></div>
       </div>
-   </div>
+      <p>Cargando bubbleteas...</p>
+    </div>
+  }
+
+  @if (error()) {
+    <div class="error-state">
+      <div class="error-icon">😿</div>
+      <p>{{ error() }}</p>
+      <button class="btn-retry" (click)="loadBubbleteas()">🔄 Reintentar</button>
+    </div>
+  }
+
+  @if (!loading() && !error() && teas().length === 0) {
+    <div class="empty-state">
+      <div class="empty-emoji">🧋</div>
+      <h3>¡No hay bubbleteas aún!</h3>
+      <p>Sé el primero en añadir uno ✨</p>
+    </div>
+  }
+
+  @if (!loading() && !error() && teas().length > 0 && filteredTeas().length === 0) {
+    <div class="empty-state">
+      <div class="empty-emoji">🔍</div>
+      <h3>Sin resultados</h3>
+      <p>No encontramos bubbleteas que coincidan 😅</p>
+    </div>
+  }
+
+  @if (!loading() && !error() && filteredTeas().length > 0) {
+    <div class="grid">
+      @for (tea of filteredTeas(); track tea.id; let i = $index) {
+        <div class="card" [style.animation-delay]="i * 80 + 'ms'">
+          <div class="card-emoji">🧋</div>
+          @if (tea.favorite) {
+            <span class="badge-favorite">⭐ Favorito</span>
+          }
+          <h3 class="card-name">{{ tea.name }}</h3>
+          <p class="card-flavor">{{ tea.flavor }}</p>
+          <p class="card-price">{{ tea.price }} €</p>
+          <div class="card-actions">
+            <button class="btn-edit" (click)="openEdit(tea)">✏️ Editar</button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  @if (showForm()) {
+    <div class="modal-overlay" (click)="closeForm()">
+      <div class="modal" (click)="$event.stopPropagation()">
+
+        <div class="modal-header">
+          <span class="modal-icon">🧋</span>
+          <h2>{{ editingTea() ? 'Editar BubbleTea' : 'Nuevo BubbleTea' }}</h2>
+        </div>
+
+        <form (ngSubmit)="submitForm()" #f="ngForm">
+
+          <div class="field">
+            <label for="nombre">Nombre *</label>
+            <input id="nombre" name="nombre" [(ngModel)]="formModel.nombre"
+              required placeholder="Ej: Taro Milk Tea" />
+          </div>
+
+          <div class="field">
+            <label for="tipo">Tipo / Sabor *</label>
+            <input id="tipo" name="tipo_bubbletea" [(ngModel)]="formModel.tipo_bubbletea"
+              required placeholder="Ej: Taro, Matcha, Fresa..." />
+          </div>
+
+          <div class="field">
+            <label for="descripcion">Descripción</label>
+            <textarea id="descripcion" name="descripcion" [(ngModel)]="formModel.descripcion"
+              rows="3" placeholder="Descripción opcional"></textarea>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="precio">Precio (€) *</label>
+              <input id="precio" name="precio" type="number" [(ngModel)]="formModel.precio"
+                required min="0" step="0.01" />
+            </div>
+            <div class="field">
+              <label for="stock">Stock</label>
+              <input id="stock" name="stock" type="number" [(ngModel)]="formModel.stock"
+                min="0" />
+            </div>
+          </div>
+
+          @if (formError()) {
+            <p class="form-error">{{ formError() }}</p>
+          }
+
+          <div class="modal-actions">
+            <button type="button" class="btn-cancel" (click)="closeForm()">Cancelar</button>
+            <button type="submit" class="btn-save" [disabled]="saving() || f.invalid">
+              {{ saving() ? '✨ Guardando...' : (editingTea() ? '💾 Guardar cambios' : '🌟 Crear') }}
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  }
 
 </div>
