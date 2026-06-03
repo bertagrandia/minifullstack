@@ -390,6 +390,9 @@ header h1 {
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
   resize: vertical;
+  height: auto;
+  min-height: 2.5rem;
+  line-height: 1.5;
   &:focus { border-color: $green-matcha; box-shadow: 0 0 0 3px rgba($green-matcha, 0.18); background: #fff; }
   &::placeholder { color: rgba($dark-text, 0.42); }
 }
