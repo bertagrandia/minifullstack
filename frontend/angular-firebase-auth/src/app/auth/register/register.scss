@@ -178,3 +178,15 @@ button {
 
   &:hover { border-bottom-color: $dark-text; }
 }
+
+// ─── Responsive ──────────────────────────────────────────────────────────────
+@media (max-width: 480px) {
+  .auth-page { padding: 1.25rem 1rem; align-items: flex-start; }
+  .auth-card { padding: 2rem 1.4rem; }
+}
+
+@media (max-width: 360px) {
+  .auth-page { padding: 0.75rem; }
+  .auth-card { padding: 1.6rem 1.1rem; }
+  .brand h2 { font-size: 1.1rem; }
+}

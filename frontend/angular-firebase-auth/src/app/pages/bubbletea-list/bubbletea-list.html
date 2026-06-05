@@ -12,7 +12,6 @@
       <h1>BubbleTea World</h1>
     </div>
     <div class="header-actions">
-      <button class="btn-create" (click)="openCreate()">✨ Nuevo BubbleTea</button>
       <button class="btn-logout" (click)="logout()">Logout</button>
     </div>
   </header>
@@ -83,24 +82,31 @@
   }
 
   @if (!loading() && !error() && filteredTeas().length > 0) {
-    <div class="grid">
-      @for (tea of filteredTeas(); track tea.id; let i = $index) {
-        <div class="card" [style.animation-delay]="i * 80 + 'ms'">
-          <div class="bubble-inner">
-            @if (tea.favorite) {
-              <span class="badge-favorite">⭐</span>
-            }
-            <div class="card-emoji">🧋</div>
-            <h3 class="card-name">{{ tea.name }}</h3>
-            <p class="card-flavor">{{ tea.flavor }}</p>
-            <p class="card-price">{{ tea.price }} €</p>
-          </div>
-          <div class="card-actions">
-            <button class="btn-edit" (click)="openEdit(tea)" title="Editar">✏️</button>
-            <button class="btn-delete" (click)="deleteTea(tea)" title="Eliminar">🗑️</button>
-          </div>
+    <div class="glass-wrapper">
+      <div class="glass-lid">
+        <div class="lid-tab">
+          <button class="btn-create" (click)="openCreate()">✨ Nuevo BubbleTea</button>
         </div>
-      }
+      </div>
+      <div class="grid">
+        @for (tea of filteredTeas(); track tea.id; let i = $index) {
+          <div class="card" [style.animation-delay]="i * 80 + 'ms'">
+            <div class="bubble-inner">
+              @if (tea.favorite) {
+                <span class="badge-favorite">⭐</span>
+              }
+              <div class="card-emoji">🧋</div>
+              <h3 class="card-name">{{ tea.name }}</h3>
+              <p class="card-flavor">{{ tea.flavor }}</p>
+              <p class="card-price">{{ tea.price }} €</p>
+            </div>
+            <div class="card-actions">
+              <button class="btn-edit" (click)="openEdit(tea)" title="Editar">✏️</button>
+              <button class="btn-delete" (click)="deleteTea(tea)" title="Eliminar">🗑️</button>
+            </div>
+          </div>
+        }
+      </div>
     </div>
   }
 

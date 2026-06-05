@@ -10,6 +10,21 @@
 
       <form class="auth-form" (ngSubmit)="register()">
          <label>
+            Nombre
+            <input [(ngModel)]="name" name="name" type="text" placeholder="Tu nombre" />
+         </label>
+
+         <label>
+            Apellido
+            <input [(ngModel)]="surname" name="surname" type="text" placeholder="Tu apellido" />
+         </label>
+
+         <label>
+            Fecha de nacimiento
+            <input [(ngModel)]="birth_date" name="birth_date" type="date" />
+         </label>
+
+         <label>
             Email
             <input [(ngModel)]="email" name="email" type="email" autocomplete="username" placeholder="tú@correo.com" />
          </label>

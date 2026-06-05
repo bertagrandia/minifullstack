@@ -30,6 +30,16 @@ $r-pill: 100px;
   0%, 100% { transform: scale(0.75); opacity: 0.5; }
   50%       { transform: scale(1.15); opacity: 1; }
 }
+@keyframes floatBubble {
+  0%, 100% { transform: translateY(0) scale(1); }
+  40%       { transform: translateY(-9px) scale(1.02); }
+  65%       { transform: translateY(-6px) scale(1.01); }
+}
+@keyframes liquidWave {
+  0%, 100% { border-radius: 48% 52% 110px 110px / 28px 22px 110px 110px; }
+  35%       { border-radius: 55% 45% 110px 110px / 18px 32px 110px 110px; }
+  70%       { border-radius: 43% 57% 110px 110px / 34px 16px 110px 110px; }
+}
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 .page {
@@ -126,10 +136,10 @@ header h1 {
 
 .btn-create {
   @extend %btn-base;
-  padding: 0.66rem 1.5rem;
+  padding: 0.55rem 1.1rem;
   background: $dark-text;
   color: #fff;
-  font-size: 0.84rem;
+  font-size: 0.8rem;
   letter-spacing: 0.1px;
   border-radius: $r-pill;
   border: 2px solid $dark-text;
@@ -321,14 +331,171 @@ header h1 {
   p  { margin: 0; color: rgba($dark-text, 0.48); font-size: 0.88rem; font-weight: 400; }
 }
 
-// ─── Grid & Bubbles ──────────────────────────────────────────────────────────
-.grid {
+// ─── Glass Wrapper (copa/vaso) ───────────────────────────────────────────────
+.glass-wrapper {
   position: relative;
   z-index: 10;
+  max-width: 1080px;
+  margin: 0 auto;
+  width: 100%;
+
+}
+
+// ─── Tapa del vaso estilo termo ──────────────────────────────────────────────
+.glass-lid {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% + 24px);
+  height: 20px;
+  z-index: 5;
+
+  // Cuerpo recto de la tapa — plástico translúcido
+  background: linear-gradient(
+    180deg,
+    rgba(190, 225, 205, 0.92) 0%,
+    rgba(160, 205, 178, 0.82) 50%,
+    rgba(135, 185, 158, 0.78) 100%
+  );
+  border-radius: 4px 4px 3px 3px;
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+  border-bottom: 2px solid rgba(150, 200, 170, 0.45);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  box-shadow:
+    inset 0 2px 6px rgba(255, 255, 255, 0.55),
+    inset 0 -1px 4px rgba(0, 0, 0, 0.07),
+    0 3px 8px rgba($dark-text, 0.1);
+
+
+  // Línea de brillo horizontal sobre la tapa plana
+  &::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 8%;
+    width: 84%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.65) 30%, rgba(255,255,255,0.65) 70%, transparent 100%);
+    border-radius: 2px;
+    pointer-events: none;
+  }
+}
+
+// ─── Pestaña de la tapa (contiene el botón de crear) ─────────────────────────
+.lid-tab {
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  height: 40px;
+  min-width: 148px;
   display: flex;
-  flex-wrap: wrap;
-  gap: 2rem 1.8rem;
+  align-items: center;
   justify-content: center;
+  padding: 0 0.9rem;
+
+  background: linear-gradient(
+    180deg,
+    rgba(185, 222, 200, 0.95) 0%,
+    rgba(155, 200, 172, 0.88) 50%,
+    rgba(130, 180, 152, 0.82) 100%
+  );
+  border-radius: 6px 6px 0 0;
+  border: 1.5px solid rgba(255, 255, 255, 0.72);
+  border-bottom: none;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  box-shadow:
+    inset 0 3px 7px rgba(255, 255, 255, 0.65),
+    inset 0 -1px 3px rgba(0, 0, 0, 0.05),
+    -2px -3px 10px rgba($dark-text, 0.07);
+
+  .btn-create {
+    white-space: nowrap;
+    font-size: 0.74rem;
+  }
+}
+
+// ─── Grid (cuerpo del vaso) ───────────────────────────────────────────────────
+.grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(5, 145px);
+  gap: 1.8rem 1.5rem;
+  justify-content: center;
+  padding: 2.5rem 2rem 4rem;
+  min-height: 290px;
+
+  // Forma de vaso: bordes rectos arriba, redondeados abajo
+  border-radius: 0 0 110px 110px;
+
+  // Fondo: líquido de té translúcido
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.3) 0%, transparent 60%),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.18) 0%,
+      rgba($green-cream, 0.58) 14%,
+      rgba($green-pale, 0.44) 52%,
+      rgba($green-light, 0.5) 100%
+    );
+
+  // Bordes del cristal: izquierda más brillante (reflejo de luz)
+  border-left:   3.5px solid rgba(255, 255, 255, 0.7);
+  border-right:  3.5px solid rgba(255, 255, 255, 0.28);
+  border-top:    4px   solid rgba(255, 255, 255, 0.8);
+  border-bottom: 4px   solid rgba(255, 255, 255, 0.5);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  overflow: hidden;
+
+  box-shadow:
+    inset 10px 0 28px rgba(255, 255, 255, 0.5),
+    inset -10px 0 28px rgba(255, 255, 255, 0.2),
+    inset 0 -22px 45px rgba($green-dark, 0.14),
+    inset 0 18px 32px rgba(255, 255, 255, 0.18),
+    // reflejo lateral derecho (antes ::after)
+    inset -12px 0 0 0 rgba(255, 255, 255, 0),
+    0 28px 72px rgba($dark-text, 0.17),
+    0 8px 24px rgba($dark-text, 0.07);
+
+  // Espuma/crema en la superficie
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.42) 0%, transparent 100%);
+    border-radius: 110px 110px 0 0;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  // Líquido animado en el interior del vaso
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70%;
+    background: linear-gradient(
+      180deg,
+      rgba($green-light,  0.30)  0%,
+      rgba($green-matcha, 0.48) 38%,
+      rgba($green-dark,   0.60) 100%
+    );
+    border-radius: 48% 52% 110px 110px / 28px 22px 110px 110px;
+    animation: liquidWave 7s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+  }
 }
 
 .card {
@@ -341,35 +508,38 @@ header h1 {
   border: none;
   padding: 0;
   box-shadow: none;
+  position: relative;
+  z-index: 3;
 
   &:hover {
     .bubble-inner {
-      transform: translateY(-5px) scale(1.05);
+      animation: none;
+      transform: translateY(-7px) scale(1.07);
+      transition: transform 0.24s ease, box-shadow 0.24s ease;
       box-shadow:
-        0 16px 40px rgba($dark-text, 0.13),
-        inset 0 -5px 14px rgba($green-pale, 0.35),
-        inset 0 5px 10px rgba(255, 255, 255, 0.85);
-      border-color: $green-light;
+        0 18px 44px rgba($dark-text, 0.16),
+        inset 0 -6px 16px rgba(0, 0, 0, 0.06),
+        inset 0 6px 12px rgba(255, 255, 255, 0.9);
     }
     .card-actions { opacity: 1; }
   }
 }
 
 .bubble-inner {
-  width: 165px;
-  height: 165px;
+  width: 145px;
+  height: 145px;
   border-radius: 50%;
   background: radial-gradient(
     circle at 36% 26%,
-    rgba(255, 255, 255, 0.92) 0%,
-    $surface-card 55%,
-    rgba($green-pale, 0.18) 100%
+    rgba(255, 255, 255, 0.97) 0%,
+    rgba(210, 240, 215, 0.88) 50%,
+    rgba(180, 225, 190, 0.65) 100%
   );
-  border: 2px solid rgba($green-pale, 0.85);
+  border: 2.5px solid rgba(180, 225, 190, 0.9);
   box-shadow:
-    0 6px 22px rgba($dark-text, 0.08),
-    inset 0 -4px 12px rgba($green-pale, 0.28),
-    inset 0 4px 8px rgba(255, 255, 255, 0.8);
+    0 8px 26px rgba(100, 180, 120, 0.13),
+    inset 0 -5px 14px rgba(100, 180, 120, 0.08),
+    inset 0 5px 12px rgba(255, 255, 255, 0.92);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -377,10 +547,20 @@ header h1 {
   text-align: center;
   padding: 1.2rem;
   box-sizing: border-box;
-  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+  transition: box-shadow 0.24s ease;
   overflow: hidden;
   position: relative;
+  animation: floatBubble 3.4s ease-in-out infinite;
 }
+
+// Delays escalonados para que cada burbuja flote a su ritmo
+.card:nth-child(5n+1) .bubble-inner { animation-duration: 3.2s; animation-delay: 0s;    }
+.card:nth-child(5n+2) .bubble-inner { animation-duration: 3.9s; animation-delay: 0.65s; }
+.card:nth-child(5n+3) .bubble-inner { animation-duration: 2.8s; animation-delay: 1.3s;  }
+.card:nth-child(5n+4) .bubble-inner { animation-duration: 3.6s; animation-delay: 0.4s;  }
+.card:nth-child(5n)   .bubble-inner { animation-duration: 3.1s; animation-delay: 1.0s;  }
+
+// ─── Colores variados por tipo de burbuja (sabores de bubble tea) ────────────
 
 .card-emoji {
   font-size: 1.75rem;
@@ -618,11 +798,24 @@ header h1 {
 }
 
 // ─── Responsive ──────────────────────────────────────────────────────────────
-@media (max-width: 1024px) {
-  .grid { grid-template-columns: repeat(2, 1fr); gap: 1.1rem; }
+
+// Portátil/tablet grande: 4 columnas (5 cols necesitan ≥1084px de viewport)
+@media (max-width: 1083px) {
+  .grid { grid-template-columns: repeat(4, 145px); }
 }
 
+// Tablet: 3 columnas (4 cols necesitan ≥890px de viewport)
+@media (max-width: 889px) {
+  .grid { grid-template-columns: repeat(3, 145px); }
+}
+
+// Tablet pequeña/móvil grande: ajustes de cabecera y controles
 @media (max-width: 768px) {
+  .glass-wrapper::before { right: 22%; width: 17px; height: 270px; top: -95px; }
+  .glass-wrapper::after  { right: calc(22% - 75px); width: 92px; height: 17px; top: -95px; }
+  .glass-lid { height: 14px; top: -14px; }
+  .lid-tab { height: 34px; min-width: 128px; right: 0; }
+  .glass-wrapper { margin-top: 40px; }
   .page { padding: 1.5rem 1rem; gap: 2rem; }
   header { flex-direction: column; align-items: flex-start; padding-bottom: 1.2rem; }
   .header-actions { width: 100%; justify-content: space-between; }
@@ -630,23 +823,30 @@ header h1 {
   header h1 { font-size: clamp(1.35rem, 2.5vw, 1.85rem); }
   .controls { gap: 0.7rem; }
   .search-bar { max-width: 100%; }
-  .grid { grid-template-columns: 1fr; }
+  .grid { padding: 2.5rem 1.5rem 4rem; gap: 1.5rem; }
   .modal { padding: 1.6rem; }
   .field-row { grid-template-columns: 1fr; }
 }
 
+// Móvil: 2 columnas con burbujas más pequeñas
 @media (max-width: 560px) {
+  .glass-wrapper::before { right: 18%; width: 14px; height: 210px; top: -75px; }
+  .glass-wrapper::after  { right: calc(18% - 60px); width: 74px; height: 14px; top: -75px; }
+  .glass-lid { height: 11px; top: -11px; }
+  .lid-tab { height: 28px; min-width: 110px; font-size: 0.72rem; right: 0; }
   .page { padding: 1rem 0.75rem; gap: 1.5rem; }
   .header-logo { font-size: 1.4rem; width: 2.4rem; height: 2.4rem; }
   header h1 { font-size: 1.15rem; }
+  .header-actions { justify-content: flex-start; gap: 0.5rem; }
   .btn-create, .btn-logout { padding: 0.5rem 0.85rem; font-size: 0.78rem; }
   .search-bar { padding: 0.58rem 1.1rem; gap: 0.55rem; }
   .search-input { font-size: 0.84rem; }
   .filter-pill { padding: 0.42rem 0.85rem; font-size: 0.78rem; }
   .loading-bubble { width: 8px; height: 8px; }
-  .card { padding: 1.25rem 1.15rem; }
-  .card-emoji { font-size: 1.75rem; }
-  .card-name { font-size: 0.97rem; }
+  .grid { grid-template-columns: repeat(2, 125px); padding: 1.8rem 1rem 3rem; gap: 1rem; border-radius: 0 0 80px 80px; }
+  .bubble-inner { width: 125px; height: 125px; }
+  .card-emoji { font-size: 1.55rem; }
+  .card-name { font-size: 0.78rem; }
   .btn-edit { padding: 0.34rem 0.78rem; font-size: 0.73rem; }
   .btn-delete { padding: 0.34rem 0.5rem; font-size: 0.76rem; }
   .modal { padding: 1.3rem; }
@@ -656,4 +856,26 @@ header h1 {
   .field input, .field textarea { font-size: 0.84rem; }
   .modal-actions { gap: 0.45rem; }
   .btn-cancel, .btn-save { padding: 0.48rem 0.85rem; font-size: 0.78rem; }
+}
+
+// Móvil muy pequeño (≤400px): 320px–375px — columnas flexibles para evitar overflow horizontal
+@media (max-width: 400px) {
+  .page { padding: 0.75rem 0.5rem; gap: 1.2rem; }
+  header h1 { font-size: 1rem; }
+  .header-logo { font-size: 1.25rem; width: 2.1rem; height: 2.1rem; }
+  .search-bar { padding: 0.5rem 0.9rem; }
+  .lid-tab { height: 34px; min-width: 0; right: 0; padding: 0 0.65rem; }
+  .glass-lid { height: 13px; top: -13px; }
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.7rem;
+    padding: 1.5rem 0.75rem 2.8rem;
+    border-radius: 0 0 60px 60px;
+  }
+  .bubble-inner { width: 100px; height: 100px; padding: 0.75rem; }
+  .card-emoji { font-size: 1.35rem; }
+  .card-name { font-size: 0.73rem; max-width: 88px; }
+  .card-flavor { max-width: 88px; }
+  .card-price { font-size: 0.92rem; }
+  .modal { padding: 1.1rem; }
 }

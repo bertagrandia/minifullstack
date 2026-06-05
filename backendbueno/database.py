@@ -29,3 +29,5 @@ if "sqlite" in DATABASE_URL:
 
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False, future=True)
 Base = declarative_base()
+
+from models.user import User  # noqa: E402, F401 — registers User table with Base

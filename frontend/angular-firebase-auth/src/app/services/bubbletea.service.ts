@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 export class BubbleteaService {
 
    private http = inject(HttpClient);
-   private apiUrl = 'http://127.0.0.1:8000/bubbleteas/';
+   private apiUrl = 'http://127.0.0.1:8001/bubbleteas/';
 
    private mapItem(item: any): BubbleTea {
       return {

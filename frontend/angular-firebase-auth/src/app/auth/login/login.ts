@@ -32,7 +32,7 @@ export class LoginComponent {
 
     try {
       await this.auth.login(this.email.trim(), this.password);
-      this.router.navigate(['/bubbleteas']);
+      this.router.navigate(['/home']);
     } catch (err: any) {
       this.error = err?.message ?? 'No se pudo iniciar sesión. Revisa tus credenciales.';
     }
