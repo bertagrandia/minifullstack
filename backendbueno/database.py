@@ -1,25 +1,31 @@
 import os
 from pathlib import Path
 
+from dotenv import load_dotenv
 from sqlalchemy import create_engine, event
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-# Get absolute path for SQLite database
+load_dotenv(Path(__file__).resolve().parent / ".env")
+
 BASE_DIR = Path(__file__).resolve().parent
 DB_PATH = BASE_DIR / "bubbletea.db"
 
-# Use environment variable or local SQLite database
 DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{DB_PATH}")
 
-# Create engine with proper SQLite configuration
+if "sqlite" in DATABASE_URL:
+    connect_args = {"check_same_thread": False}
+elif "mysql" in DATABASE_URL:
+    connect_args = {"ssl": {}}
+else:
+    connect_args = {}
+
 engine = create_engine(
     DATABASE_URL,
     echo=True,
     future=True,
-    connect_args={"check_same_thread": False} if "sqlite" in DATABASE_URL else {}
+    connect_args=connect_args,
 )
 
-# Enable foreign keys for SQLite
 if "sqlite" in DATABASE_URL:
     @event.listens_for(engine, "connect")
     def set_sqlite_pragma(dbapi_conn, connection_record):
@@ -30,4 +36,5 @@ if "sqlite" in DATABASE_URL:
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False, future=True)
 Base = declarative_base()
 
-from models.user import User  # noqa: E402, F401 — registers User table with Base
+from models.user import User  # noqa: E402, F401
+from models.bubbletea import BubbleTea  # noqa: E402, F401
